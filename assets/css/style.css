@@ -1,0 +1,132 @@
+body {
+	background-image: url(../images/triviacover.png);
+	height: 800px;
+    background-size: cover;
+    font-family: "Times New Roman", Georgia, sans-serif;
+    position: fixed;
+    width: 100%;
+    }
+#test {
+    border #550000 1px solid; padding: 10px 40px 40px 40px; 
+}
+h1{
+	color: #550000;
+	margin: auto;
+	display: block;
+	width: 1280px;
+	font-family: "Times New Roman", Georgia, sans-serif;
+	position: relative;
+    font-weight: bolder;
+    text-align: center;
+    font-size: 100px;
+    text-shadow: #F9BA10 0 0 10px;
+    }
+h2{
+	color: #550000;
+    text-align: center;
+    text-shadow: #550000 0 0 10px;
+    }
+.cover {
+	margin: auto;
+	display: block;
+    }
+#title {
+	margin: 20px;
+    }
+footer {
+    height: 35px;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    color: #550000;
+    font-size: 18px;
+    margin: 0px 40px 0px 40px;
+    }
+#countdown {
+	color: yellow;
+    }
+span {
+	color: yellow;
+    }
+.background {
+	width: 800px;
+	height: 600px;
+	margin: auto;
+	display: block;
+	background-color: #E8ECB1;
+	border: 10px solid #550000;
+	border-radius: 40px;
+	z-index: -1;
+    }
+button {
+	background-color: #550000;
+	font-family: Arial, sans-serif;
+	color: white;
+	font-size: 1em;
+	width: 100px;
+	height: 50px;
+	display: block;
+	margin: auto;
+	border-radius: 20px;
+    }
+#display {
+	position: relative;
+	top: 50px;
+	font-size: 30px;
+	width: 500px;
+	margin: auto;
+    }
+#display {
+	position: relative;
+	top: 70px;
+	width: 500px;
+	margin: auto;
+	display: block;
+    }
+#answerOne {
+	margin: auto;
+	display: block;
+	width: 100px;
+	padding: 10px;
+    }
+#answerTwo {
+	margin: auto;
+	display: block;
+	width: 100px;
+	padding: 10px;
+    }
+#answerThree {
+	margin: auto;
+	display: block;
+	width: 100px;
+	padding: 10px;
+    }
+#answerFour {
+	margin: auto;
+	display: block;
+	width: 100px;
+	padding: 10px;
+    }
+#answerOne:hover {
+	border: 10px solid orange;
+	border-radius: 20px;
+    }
+#answerTwo:hover {
+	border: 10px solid orange;
+	border-radius: 20px;
+    }
+#answerThree:hover {
+	border: 10px solid orange;
+	border-radius: 20px;
+    }
+#answerFour:hover {
+	border: 10px solid orange;
+	border-radius:15px;
+    }
+#graphic {
+	width: 480px;
+	margin: auto;
+	display: block;
+	position: relative;
+	top: 100px;
+    }

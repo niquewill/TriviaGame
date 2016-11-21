@@ -1,13 +1,5 @@
 //USE ONE ON CLICK THAT USES A BUTTON CLASS, INSTEAD OF FOUR INDIVIDUAL BUTTONS
-var game = {
-
-	//Variables
-	timer: 20,
-	correctScore: 0,
-	incorrectScore: 0,
-	unanswered: 0,
-results =  ["They were threatened by my intelligence and too stupid to know that’s why they hated me.", "Not knowing is part of the fun. Was that the motto of your community college?"],
-
+var pos = 0, trivia, trivia_status, question, choice, choices, chA, chB, chC, chD, correctAnswer , incorrectAnswer= 0;
 //Questions object
 var question = [{
 	question: "What kind of candy did Buu turn Krillin into?",
@@ -50,74 +42,109 @@ var question = [{
 	answers: ["Pein", "Kakuzu", "Sasuke", "Orochimaru"],
 	correctAnswer: "Kakuzu"
 }];
-	//Functions
-	start: function() {
-		//Create Start button
-		$('#graphic').html('<button id="start">START</button>');
+//function _(x){
+//	return document.getElementById(x);
+//}
+//function renderQuestion(){
+//	test = _("test");
+//	if(pos >= questions.length){
+//		test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
+//		_("test_status").innerHTML = "Test Completed";
+//		pos = 0;
+//		correct = 0;
+//		return false;
+//	}
+//	_("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
+//	question = questions[pos][0];
+//	chA = questions[pos][1];
+//	chB = questions[pos][2];
+//	chC = questions[pos][3];
+//    chC = questions[pos][4];
+//	test.innerHTML = "<h3>"+question+"</h3>";
+//	test.innerHTML += "<input type='radio' name='choices' value='A'> "+chA+"<br>";
+//	test.innerHTML += "<input type='radio' name='choices' value='B'> "+chB+"<br>";
+//    test.innerHTML += "<input type='radio' name='choices' value='C'> "+chC+"<br>";
+//    test.innerHTML += "<input type='radio' name='choices' value='D'> "+chC+"<br><br>";
+//	test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
+//}
+//function checkAnswer(){
+//	choices = document.getElementsByName("choices");
+//	for(var i=0; i<choices.length; i++){
+//		if(choices[i].checked){
+//			choice = choices[i].value;
+//		}
+//	}
+//	if(choice == questions[pos][4]){
+//		correct++;
+//	}
+//	pos++;
+//	renderQuestion();
+//}
+//window.addEventListener("load", renderQuestion, false);
 
-		//When Start clicked
-		$('#start').unbind().click(function() {
-			
-			//Remove the button
-			$('#start').remove();
-
-			//Go to askQuestion
-			game.askQuestion();
-		})
-	},
-	countDown: function() {
-
-		console.log("In countDown");
-
-		if(game.timer > 0){
-			
-			//Decrement time
-			game.timer--;
-			
-			//Display current time
-			$('#timer').html(game.timer);
-		}
-		else {
-			//Clear countDown timer
-			clearInterval();
-			//Go to timeUp
-			game.timeUp();
-		}
-	},
-
-	Function timeUp() {
+var results =  ["They were threatened by my intelligence and too stupid to know that’s why they hated me.", "Not knowing is part of the fun. Was that the motto of your community college?"];
+//	
+//	countDown: function() {
+//
+//		console.log("In countDown");
+//
+//		if(game.timer > 0){
+//			
+//			//Decrement time
+//			game.timer--;
+//			
+//			//Display current time
+//			$('#counter').html(game.counter);
+//		}
+//		else {
+//			//Clear countDown timer
+//			clearInterval();
+//			//Go to timeUp
+//			game.timeUp();
+//		}
+//	},
+function countDown(secs,elem) {
+	var element = document.getElementById(elem);
+	element.innerHTML = "Time Remaining "+secs+" seconds";
+	if(secs < 1) {
+		clearTimeout(timer);
+		element.innerHTML = '<h2>Countdown Complete!</h2>';
+		element.innerHTML += '<a href="#">Click here now</a>';
+	}
+	secs--;
+	var timer = setTimeout('countDown('+secs+',"'+elem+'")',2000);
+}
+	function timeUp() {
 
 		console.log("In timeUp");
 
 		//Stop the timer
 		clearInterval(clock);
 
-		//Set userGuess to nothing. You get nothing! Good day, sir!
+		//Set userGuess to null
 		userGuess = null;
 
-//Provide correct answer
+		//Provide correct answer
 		correct = question[0].correctAnswer
 
 		//Go to checkGuess
 		game.checkGuess(userGuess, correct);
-
-	},
-
-   }function askQuestion() {
+    }
+	function askQuestion() {
 
 		//Create divs for each answer to go
 		$('#aDisplay').append("<div id ='answerOne'</div>");
 		$('#aDisplay').append("<div id ='answerTwo'</div>");
 		$('#aDisplay').append("<div id ='answerThree'</div>");
 		$('#aDisplay').append("<div id ='answerFour'</div>");
-        		$('#aDisplay').append("<div id ='answerFive'</div>");
+        $('#aDisplay').append("<div id ='answerFive'</div>");
 		$('#aDisplay').append("<div id ='answerSix'</div>");
 		$('#aDisplay').append("<div id ='answerSeven'</div>");
 		$('#aDisplay').append("<div id ='answerEight'</div>");
-        		$('#aDisplay').append("<div id ='answerNine'</div>");
+        $('#aDisplay').append("<div id ='answerNine'</div>");
 		$('#aDisplay').append("<div id ='answerTen'</div>");
 		console.log("In askQuestion");
-  }
+
 		//Timer counts down
 		clock = setInterval(game.countDown, 2000);
 
@@ -136,7 +163,7 @@ var question = [{
 
 		var answerFour = question[0].answers[3];
 		$('#answerFour').html(answerFour);
-        		var answerFive = question[0].answers[4];
+        var answerFive = question[0].answers[4];
 		$('#answerFive').html(answerFive);
 		var answerSix = question[0].answers[5];
 		$('#answerSix').html(answerSix);
@@ -158,69 +185,69 @@ var question = [{
 			clearInterval(clock);
 			userGuess = answerOne;
 			game.checkGuess(userGuess, correct);
-		});
+		})
 
 		$('#answerTwo').unbind().click(function() {
 			
 			clearInterval(clock);
 			userGuess = answerTwo;
 			game.checkGuess(userGuess, correct);
-		});
+		})
 
 		$('#answerThree').unbind().click(function() {
 			
 			clearInterval(clock);
 			userGuess = answerThree;
 			game.checkGuess(userGuess, correct);
-		});
+		})
 
 		$('#answerFour').unbind().click(function() {
 			
 			clearInterval(clock);
 			userGuess = answerFour;
 			game.checkGuess(userGuess, correct);
-		});
+		})
 	$('#answerFive').unbind().click(function() {
 			
 			clearInterval(clock);
 			userGuess = answerFive;
 			game.checkGuess(userGuess, correct);
-		});
+		})
       	$('#answerSix').unbind().click(function() {
 			
 			clearInterval(clock);
 			userGuess = answerSix;
 			game.checkGuess(userGuess, correct);
-		});
+		})
     $('#answerSeven').unbind().click(function() {
 			
 			clearInterval(clock);
 			userGuess = answerSeven;
 			game.checkGuess(userGuess, correct);
-		});
+		})
     $('#answerEight').unbind().click(function() {
 			
 			clearInterval(clock);
 			userGuess = answerEight;
 			game.checkGuess(userGuess, correct);
-		});
+		})
       	$('#answerNine').unbind().click(function() {
 			
 			clearInterval(clock);
 			userGuess = answerNine;
 			game.checkGuess(userGuess, correct);
-		});
+		})
     $('#answerTen').unbind().click(function() {
 			
 			clearInterval(clock);
 			userGuess = answerTen;
 			game.checkGuess(userGuess, correct);
-		});
+		})
     
 	function checkGuess (userGuess,correct) {
 
 		console.log("In checkGuess");
-  }
+
 		//If user picks correct answer
 		if (userGuess === correct){
 			
@@ -281,28 +308,53 @@ var question = [{
 
 		}
 
-		
-		setTimeout(function(){ game.nextQuestion(); }, 4000);
+		//If user picks wrong answer
+		else {
+			//Discourage
+			$('#qDisplay').html(game.results[1]);
+
+			//Empty the answers
+			$('#answerOne').remove();
+			$('#answerTwo').remove();
+        $('#answerThree').remove();
+			$('#answerFour').remove();
+            $('#answerFive').remove();
+			$('#answerSix').remove();
+			$('#answerSeven').remove();
+			$('#answerEight').remove();
+            $('#answerNine').remove();
+			$('#answerTen').remove();
+            
+			//Reveal correct answer
+			$('#aDisplay').html("The correct answer was " + correct);
+			//Increment incorrect count
+			game.incorrectScore++;
+
+			//Go to pause
+			game.pause();
+		}
 	},
 
+	function pause() {
+
+		console.log("In pause");
+
+		//Wait 4 seconds before going to nextQuestion
+		setTimeout(function(){ game.nextQuestion(); }, 5000);
+	},
 
 	nextQuestion: function() {
 
-
 		console.log("In nextQuestion");
-
 
 		//Clear "Correct answer was"
 		$('#aDisplay').empty();
 
-
 		//Clear the #graphic div
 		$('#graphic').empty();
 
-
 		//Set next question to index 0
 		question.shift();
-
 
 		//Checks if any questions are left
 		if(question.length === 0) {
@@ -312,34 +364,27 @@ var question = [{
 		}
 		else {
 			//Reset seconds
-			game.timer = 15;
-
+			game.timer = 20;
 
 			//Ask new question
 			game.askQuestion();	
 		}
 
-
 	},
 
-
-	finished: function() {
+	function finished() {
 		
 		console.log("In finished");
 
-
 		//Display stats
-		$('#qDisplay').html("The Force will be with you, always.");
+		$('#qDisplay').html("They were threatened by my intelligence and too stupid to know that’s why they hated me.");
 		$('#aDisplay').html("<p>Number of questions right: " + game.correctScore + "</p>" +
 							"<p>Number of questions wrong: " + game.incorrectScore + "</p>" +
 							"<p>Number of questions unanswered: " + game.unanswered + "</p>");
 
 
-
-
 		//Create Reset button
 		$('#graphic').html('<button id="reset">RESET</button>');
-
 
 		//When Reset clicked
 		$('#reset').unbind().click(function() {
@@ -347,21 +392,25 @@ var question = [{
 			//Remove the button
 			$('#reset').remove();
 
-
 			//Go to game.reset()
 			game.reset();
-
 
 		})
 	},
 
-
 	reset: function() {
 
-
 		console.log("In reset");
-
 
 		//Reset page
 		location.reload();
 	},
+
+};
+
+//Start the game
+gameS.start();
+
+
+
+
